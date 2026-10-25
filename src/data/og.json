@@ -1,0 +1,20 @@
+{
+ "accent": "#9E1B32",
+ "symbol": "?",
+ "variants": [
+  {
+   "file": "og-en.png",
+   "title": "Canadian citizenship test\n2026 practice",
+   "subtitle": "20-question mock exams · 1,095-day count · IRCC fees",
+   "badge": "Rules and fees read on canada.ca, October 2026",
+   "brand": "Canada Citizenship Prep"
+  },
+  {
+   "file": "og-fr.png",
+   "title": "Examen de citoyenneté\ncanadienne 2026",
+   "subtitle": "Examens blancs de 20 questions · 1 095 jours · frais d'IRCC",
+   "badge": "Règles et frais relevés sur canada.ca, octobre 2026",
+   "brand": "Prépa citoyenneté Canada"
+  }
+ ]
+}
