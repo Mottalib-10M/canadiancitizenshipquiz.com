@@ -1,0 +1,127 @@
+---
+/**
+ * Home of one language: the timed 20-question mock exam first (the query is "canadian citizenship
+ * test"), then the road from permanent residence to the oath in five numbered stops, the ten chapters
+ * of the guide with their question counts, the 1,095-day mini count and the rules table. Every figure
+ * is read from params-2026.json or from the question banks.
+ */
+import PageLayout from '../layouts/PageLayout.astro';
+import Tool from './Tool.astro';
+import Clamp from './Clamp.astro';
+import Sources from './Sources.astro';
+import { route, type Locale } from '../i18n/routes';
+import { PAGES } from '../lib/guides';
+import { helpers } from '../lib/helpers';
+import { LAST_UPDATED, AUTHOR_NAME } from '../data/site-config';
+import { displayDate } from '../lib/format';
+import { faqSchema, webApplicationSchema, websiteSchema, organizationSchema } from '../lib/seo';
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+const fr = lang === 'fr';
+const h = helpers(lang, true);
+const P = h.P;
+const T = P.ca.test, C = P.ca.presence, F = P.ca.fees, HR = P.ca.hearing;
+const chapterPages = PAGES.filter((p) => p.group === 'chapters');
+const applyPages = PAGES.filter((p) => p.group === 'apply');
+
+const title = fr ? 'Examen de citoyenneté canadienne 2026 : test blanc gratuit' : 'Canadian Citizenship Test 2026: Free Practice Exam, 20 Qs';
+const description = fr
+  ? `Examen de citoyenneté canadienne gratuit : ${T.questions} questions en ${T.minutes} minutes, ${T.passCorrect} bonnes réponses pour réussir, chaque réponse expliquée, en français, sans compte.`
+  : `Free Canadian citizenship test practice for 2026: ${T.questions} questions in ${T.minutes} minutes, pass at ${T.passCorrect} correct answers like IRCC's test, every answer explained, no sign-up.`;
+const faqs = fr ? [
+  { q: 'Combien de bonnes réponses faut-il pour réussir l’examen de citoyenneté ?', a: `Il faut ${T.passCorrect} bonnes réponses sur ${T.questions}, soit 75 %. Une question sans réponse compte comme une erreur, donc on peut se tromper ou passer au plus ${T.questions - T.passCorrect} questions. L’examen en ligne s’arrête au bout de ${T.minutes} minutes et le résultat s’affiche dès l’envoi, puis un agent d’IRCC le confirme, ce qui prend quelques jours à quelques semaines.` },
+  { q: 'Que se passe-t-il après trois échecs ?', a: `IRCC donne ${T.attempts} essais pendant la période de ${T.onlineWindowDays} jours ouverte par l’invitation. Après trois échecs, le candidat est convoqué à une audience avec un agent de citoyenneté, qui dure de ${HR.minMinutes} à ${HR.maxMinutes} minutes : ${HR.knowledgeQuestions} questions orales sur le Canada, dont ${HR.knowledgePass} à réussir, et jusqu’à ${HR.languageQuestions} questions de langue, dont ${HR.languagePass} à réussir. Un échec à l’audience entraîne le refus de la demande.` },
+  { q: 'Peut-on passer l’examen sur un téléphone ?', a: 'Non. IRCC demande un ordinateur de bureau, un portable ou une tablette avec caméra, et le navigateur Chrome ou Safari ; le téléphone mobile est exclu, tout comme Chrome sur iPad et la Surface Pro. Il faut être seul, au même endroit que pour les photos d’identité prises au début, sans notes ni autre onglet ouvert, le visage visible pendant les 45 minutes.' },
+  { q: 'Les questions de ce site sont-elles les vraies questions ?', a: `Non, et aucun site ne les possède : la banque de l’examen n’est pas rendue publique par IRCC. Nos ${h.count} questions françaises sont l’œuvre de ${AUTHOR_NAME}, écrites en français d’après les faits de Découvrir le Canada, sans emprunter les phrases du guide ni ses questions de révision. Chaque correction renvoie au passage du guide qui justifie la réponse.` },
+  { q: 'Quand reçoit-on l’invitation à l’examen ?', a: 'Après le dépôt de la demande, quand IRCC l’a jugée complète et l’étudie. On ne choisit donc pas sa date et on ne réserve rien soi-même : l’invitation arrive par courriel ou dans le compte, avec la période pendant laquelle l’examen en ligne est accessible. Mieux vaut commencer à réviser dès l’envoi de la demande.' },
+  { q: 'Qui est dispensé de l’examen ?', a: `Les personnes de moins de ${T.ages[0]} ans et celles de ${T.ages[1] + 1} ans ou plus le jour où elles signent la demande, ainsi que celles qui obtiennent une dispense d’IRCC. Les mêmes âges servent pour la preuve de langue (niveau ${C.languageLevel}) : à 56 ans, un candidat est donc dispensé des deux, sans être dispensé des autres conditions.` },
+] : [
+  { q: 'How many questions can I get wrong and still pass?', a: `${T.questions - T.passCorrect}. The test has ${T.questions} questions and the pass mark is ${T.passCorrect} correct answers, which is 75%. A question left blank counts as wrong, so skipping is never free. The score appears on screen when you submit the online test, and an IRCC officer then confirms it, which takes from a few days to a few weeks.` },
+  { q: 'What happens if I fail three times?', a: `You get ${T.attempts} tries inside the ${T.onlineWindowDays}-day period your invitation opens. Fail all three and IRCC books a hearing with a citizenship official lasting ${HR.minMinutes} to ${HR.maxMinutes} minutes: ${HR.knowledgeQuestions} spoken questions on Canada with ${HR.knowledgePass} to get right, a check of your residence, and up to ${HR.languageQuestions} language questions with ${HR.languagePass} to pass. Failing the hearing means the application is refused.` },
+  { q: 'Can I take the online test on my phone?', a: 'No. IRCC asks for a desktop, laptop or tablet with a webcam, running Chrome or Safari; mobile phones are excluded, and so are Chrome on an iPad and the Surface Pro. You sit it alone, in the room where you took your ID photo and selfie at the start, with no notes, no second screen and your face in view for the whole 45 minutes.' },
+  { q: 'Are these the real test questions?', a: `No, and no website has them: IRCC does not publish its test bank. ${AUTHOR_NAME} drafted our ${h.count} English questions from facts found in Discover Canada, never from the guide's wording or its review questions. Each explanation points to the passage of the guide that backs the answer, so you learn the material rather than a list of answers.` },
+  { q: 'When will I be invited to the test?', a: 'Only after you apply and IRCC has found your application complete. You do not pick a date or book anything yourself: the invitation arrives by email or in your account and opens the window in which the online test can be taken. That is why it pays to start revising on the day you send the application, not on the day the invitation lands.' },
+  { q: 'Who does not have to take the test?', a: `Anyone under ${T.ages[0]} or aged ${T.ages[1] + 1} or over on the day they sign the application, and anyone IRCC grants a waiver. The same ages decide who must prove English or French at ${C.languageLevel}: a 56-year-old applicant sits no test and sends no language proof, but still needs the ${h.num(C.requiredDays)} days, the tax filing and a clean record.` },
+];
+const jsonLd = [websiteSchema(lang), organizationSchema(lang), webApplicationSchema({ name: fr ? 'Examen blanc de citoyenneté canadienne' : 'Canadian citizenship mock test', description, path: route('home', lang), lang }), faqSchema(faqs, lang)];
+const resume = fr
+  ? `L’examen pour la citoyenneté canadienne se passe en général en ligne, en français ou en anglais : ${T.questions} questions à choix multiples ou vrai ou faux, ${T.minutes} minutes, et ${T.passCorrect} bonnes réponses pour réussir. Il concerne les demandeurs de ${T.ages[0]} à ${T.ages[1]} ans le jour de la signature de leur demande. Les questions portent sur ce que présente le guide officiel, Découvrir le Canada : droits et responsabilités, histoire, géographie, économie, gouvernement, lois et symboles. IRCC envoie l’invitation après le dépôt de la demande ; elle ouvre une période de ${T.onlineWindowDays} jours pendant laquelle le candidat a ${T.attempts} essais. Après trois échecs vient une audience avec un agent, de ${HR.minMinutes} à ${HR.maxMinutes} minutes. L’examen blanc ci-dessus tire ${T.questions} questions parmi nos ${h.count} questions rédigées en français sur les dix chapitres du guide, lance le chronomètre à la première réponse et applique la même note de passage. Vous choisissez la correction au fil des questions ou à la fin, comme le jour de l’examen.`
+  : `The Canadian citizenship test is usually taken online, in English or French: ${T.questions} multiple-choice or true-or-false questions, ${T.minutes} minutes, and ${T.passCorrect} correct answers to pass. It applies to applicants aged ${T.ages[0]} to ${T.ages[1]} on the day they sign their application. Every question comes from what the official study guide, Discover Canada, covers: rights and responsibilities, history, geography, the economy, government, the law and national symbols. IRCC sends the invitation after you apply; it opens a ${T.onlineWindowDays}-day period in which you get ${T.attempts} attempts, and three failures lead to a ${HR.minMinutes}- to ${HR.maxMinutes}-minute hearing with an official. The mock exam above draws ${T.questions} questions from our ${h.count} English practice questions across the guide's ten chapters, starts a ${T.minutes}-minute clock at your first answer and marks you with the same rule. Choose whether to see each correction as you go or only at the end, as on test day.`;
+const road = fr ? [
+  ['Atteindre les jours', `${h.num(C.requiredDays)} jours de présence effective sur ${C.windowYears} ans, dont au moins ${h.num(C.requiredDays - C.preprMaxCredit)} comme résident permanent.`, 'ca-presence'],
+  ['Déposer la demande', `Formulaire en ligne, pièces, preuve de langue de ${T.ages[0]} à ${T.ages[1]} ans, ${h.cad(F.adult)} par adulte.`, 'ca-application'],
+  ['Recevoir l’invitation', `L’examen en ligne est accessible pendant ${T.onlineWindowDays} jours, avec ${T.attempts} essais.`, 'ca-online-test'],
+  ['Réussir l’examen', `${T.passCorrect} bonnes réponses sur ${T.questions} ; sinon, audience avec un agent.`, 'ca-pass-mark'],
+  ['Prêter serment', 'La cérémonie de citoyenneté est la dernière étape : on devient citoyen en prêtant serment.', 'ca-oath'],
+] : [
+  ['Reach the days', `${h.num(C.requiredDays)} days physically present in ${C.windowYears} years, at least ${h.num(C.requiredDays - C.preprMaxCredit)} of them as a permanent resident.`, 'ca-presence'],
+  ['Send the application', `Online form, documents, language proof if aged ${T.ages[0]} to ${T.ages[1]}, ${h.cad(F.adult)} per adult.`, 'ca-application'],
+  ['Get the invitation', `The online test stays open for ${T.onlineWindowDays} days, with ${T.attempts} attempts.`, 'ca-online-test'],
+  ['Pass the test', `${T.passCorrect} right out of ${T.questions}; otherwise a hearing with an official.`, 'ca-pass-mark'],
+  ['Take the oath', 'The citizenship ceremony is the last step: you become a citizen when you take the oath.', 'ca-oath'],
+];
+const rules = fr
+  ? [['Questions', T.questions], ['Bonnes réponses pour réussir', `${T.passCorrect} (75 %)`], ['Durée', `${T.minutes} minutes`], ['Essais', `${T.attempts} en ${T.onlineWindowDays} jours`], ['Âges visés', `${T.ages[0]} à ${T.ages[1]} ans`], ['Langue', 'français ou anglais'], ['Frais d’examen', 'aucun en plus des frais de demande']]
+  : [['Questions', T.questions], ['Correct answers to pass', `${T.passCorrect} (75%)`], ['Time', `${T.minutes} minutes`], ['Attempts', `${T.attempts} within ${T.onlineWindowDays} days`], ['Who sits it', `aged ${T.ages[0]} to ${T.ages[1]}`], ['Language', 'English or French'], ['Test fee', 'none on top of the application fee']];
+---
+<PageLayout title={title} description={description} lang={lang} jsonLd={jsonLd} faqs={faqs} breadcrumbs={[]}>
+  <header class="mb-3">
+    <h1 class="mt-0 text-[1.75rem] font-bold text-navy-900 max-sm:leading-tight sm:text-3xl md:text-4xl">{fr ? 'Examen de citoyenneté canadienne : examen blanc chronométré' : 'Canadian citizenship test: timed practice exam'}</h1>
+    <p class="mt-2 text-base text-navy-700 sm:text-lg">{fr ? `${T.questions} questions, ${T.minutes} minutes, ${T.passCorrect} bonnes réponses pour réussir. Site indépendant : la demande se fait uniquement sur le site d’IRCC.` : `${T.questions} questions, ${T.minutes} minutes, ${T.passCorrect} right to pass. Independent site: you apply only on the IRCC website.`}</p>
+  </header>
+  <div data-outil class="mb-4"><Tool tool={{ kind: 'quiz', props: { mode: 'exam', timed: true } }} lang={lang} primary={true} seedKey="home" /></div>
+  <Clamp text={resume} id="clamp-home" lang={lang} class="mb-3" />
+  <p class="mb-8 text-sm text-navy-600">{fr ? 'Règles et frais mis à jour le' : 'Rules and fees updated on'} <time datetime={LAST_UPDATED}>{displayDate(LAST_UPDATED, fr ? 'fr-CA' : 'en-CA')}</time> · {AUTHOR_NAME} · <a href={route('method', lang)} class="underline hover:text-navy-900">{fr ? 'Méthode' : 'How questions and dates are built'}</a> · <a href={route('about', lang)} class="underline hover:text-navy-900">{fr ? 'À propos' : 'About this site'}</a></p>
+
+  <section class="mb-10">
+    <h2 class="mb-4 text-2xl font-bold text-navy-900">{fr ? 'De la résidence permanente au serment, en cinq arrêts' : 'From permanent residence to the oath, in five stops'}</h2>
+    <ol class="grid gap-3 md:grid-cols-5">
+      {road.map(([t, d, id], i) => (
+        <li class="border-l-4 border-accent-700 bg-accent-50/50 px-3 py-3">
+          <p class="tabular-nums text-xs font-semibold uppercase tracking-wide text-accent-800">{fr ? 'Étape' : 'Stop'} {i + 1}</p>
+          <p class="mt-1 font-semibold text-navy-900"><a href={route(id, lang)} class="underline decoration-accent-300 hover:text-accent-800">{t}</a></p>
+          <p class="mt-1 text-sm text-navy-700">{d}</p>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <div class="prose prose-slate max-w-none">
+    <h2>{fr ? 'Réviser chapitre par chapitre' : 'Revise one chapter at a time'}</h2>
+    <p>{fr
+      ? `L’examen peut tirer ses questions de n’importe lequel des dix chapitres de Découvrir le Canada. Chaque série ci-dessous tire dix questions d’un seul chapitre et donne la correction tout de suite : c’est la façon la plus rapide de repérer le chapitre qui vous coûte des points avant de refaire un examen complet. Les chapitres sur le gouvernement et les élections font souvent perdre plus de points que l’histoire, parce qu’ils demandent de distinguer des rôles proches : premier ministre et gouverneur général, député et sénateur, palier fédéral et provincial.`
+      : `Discover Canada has ten chapters and the test can draw on any of them. Each set below takes ten questions from a single chapter and corrects you straight away, which is the quickest way to find the chapter that costs you points before you sit another full exam. Government and elections usually cost more marks than history, because they ask you to tell close roles apart: prime minister and governor general, MP and senator, federal and provincial.`}</p>
+  </div>
+  <ul class="not-prose mb-10 mt-4 grid gap-x-6 gap-y-2 sm:grid-cols-2" data-sommaire>
+    {chapterPages.map((p, i) => (
+      <li class="flex items-baseline justify-between gap-3 border-b border-navy-100 py-2"><a href={route(p.id, lang)} class="font-medium text-accent-700 underline">{p[lang].nav}</a><span class="tabular-nums shrink-0 text-sm text-navy-600">{h.inChapter(i)} {fr ? 'questions' : 'questions'}</span></li>
+    ))}
+  </ul>
+
+  <div class="prose prose-slate max-w-none">
+    <h2>{fr ? `Avant l’examen, les ${h.num(C.requiredDays)} jours` : `Before the test, the ${h.num(C.requiredDays)} days`}</h2>
+    <p>{fr
+      ? `Personne ne réserve sa place à l’examen : IRCC envoie l’invitation une fois la demande déposée. La date qui compte est donc celle où la demande devient recevable, c’est-à-dire le jour où vous totalisez ${h.num(C.requiredDays)} jours de présence effective dans les ${C.windowYears} ans qui précèdent. Un jour comme résident permanent vaut un jour ; un jour passé au Canada avant, avec un permis de travail ou d’études, comme visiteur ou comme personne protégée, vaut une demi-journée, jusqu’à ${C.preprMaxCredit} jours de crédit. Un voyage ne retire que les journées passées entièrement hors du Canada. Le petit calcul ci-dessous donne l’écart ; le calculateur des 1 095 jours trouve la date exacte avec vos voyages.`
+      : `You do not sign up for the test; you are invited once your application is in. So the date that matters is the day your application becomes acceptable: the day you have ${h.num(C.requiredDays)} days of physical presence in the ${C.windowYears} years before it. A day as a permanent resident counts as one day; a day spent in Canada before that, on a work or study permit, as a visitor or as a protected person, counts as half a day, up to ${C.preprMaxCredit} days of credit. A trip removes only the days spent entirely outside Canada. The quick count below gives the gap; the 1,095-day calculator finds the exact date with your trips.`}</p>
+  </div>
+  <div class="mb-8"><Tool tool={{ kind: 'mini:cadays' }} lang={lang} idPrefix="h1" /></div>
+
+  <div class="prose prose-slate max-w-none">
+    <h2>{fr ? 'L’examen en chiffres' : 'The test in figures'}</h2>
+    <Fragment set:html={h.table(fr ? ['Règle', 'Valeur'] : ['Rule', 'Value'], rules, fr ? `Règles lues sur canada.ca le ${h.date(P.retrieved_at)}.` : `Rules read on canada.ca on ${h.date(P.retrieved_at)}.`, ['l', 'l'])} />
+    <p>{fr
+      ? `Aucune question de langue ne figure à l’examen : la maîtrise du français ou de l’anglais se démontre séparément, au dépôt de la demande, par un test reconnu ou un diplôme. Il n’a pas non plus de frais propres : les ${h.cad(F.adult)} payés par adulte au dépôt couvrent les ${h.cad(F.adultProcessing)} de traitement et les ${h.cad(F.rightOfCitizenship)} du droit de citoyenneté, et un enfant coûte ${h.cad(F.minor)}.`
+      : `The test asks no language questions: English or French is proven separately, with the application, by an approved test or a diploma. Nor does it carry its own fee: the ${h.cad(F.adult)} paid per adult when you apply covers the ${h.cad(F.adultProcessing)} processing fee and the ${h.cad(F.rightOfCitizenship)} right of citizenship fee, and a child costs ${h.cad(F.minor)}.`}</p>
+    <h2>{fr ? 'Les questions de la demande' : 'Questions about the application'}</h2>
+  </div>
+  <ul class="not-prose mb-8 mt-4 grid gap-x-6 gap-y-3 md:grid-cols-2" data-sommaire>
+    {applyPages.map((p) => <li><a href={route(p.id, lang)} class="font-medium text-accent-700 underline">{p[lang].nav}</a><span class="block text-sm text-navy-700">{p[lang].card}</span></li>)}
+  </ul>
+  <div class="prose prose-slate max-w-none">
+    <h2>{fr ? 'Qui écrit les questions' : 'Who writes the questions'}</h2>
+    <p>{fr
+      ? `Le guide Découvrir le Canada relève du droit d’auteur de la Couronne, dont les conditions excluent tout usage commercial du texte : ${AUTHOR_NAME} n’en reprend que les faits, avec ses propres mots, et laisse de côté ce qui change souvent, comme le nom des titulaires de charges. La banque française n’est pas une traduction de l’anglaise. La page Méthode explique le tirage, la notation et ce que ce site ne fait pas.`
+      : `Discover Canada is protected by Crown copyright, whose terms exclude commercial reuse of its text, so ${AUTHOR_NAME} uses only its facts, in its own words, and leaves out what changes often, such as who holds an office today. The French bank is not a translation of the English one. The method page explains how a test is drawn and marked, and what this site does not do.`}</p>
+    <Sources lang={lang} keys={['ca_test', 'ca_study', 'ca_results', 'ca_eligibility', 'ca_fees']} />
+  </div>
+</PageLayout>

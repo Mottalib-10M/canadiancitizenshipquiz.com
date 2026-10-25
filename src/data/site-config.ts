@@ -1,6 +1,6 @@
 /** Configuration centrale du site (générée par new-site.py). */
-export const SITE_URL = "https://ca-citizenship-test.example";
-export const SITE_NAMES: Record<string, string> = {"en": "Canada Citizenship Prep", "fr": "Prépa citoyenneté Canada"};
+export const SITE_URL = "https://canadiancitizenshipquiz.com";
+export const SITE_NAMES: Record<string, string> = {"en": "Canadian Citizenship Quiz", "fr": "Quiz citoyenneté canadienne"};
 export const LANG_TAGS: Record<string, string> = {"en": "en-CA", "fr": "fr-CA"};
 export const OG_LOCALES: Record<string, string> = {"en": "en_CA", "fr": "fr_CA"};
 export const LOCALE_TAG = 'en-CA';
@@ -11,12 +11,12 @@ export const SITE_FOUNDED = '2026';
 export const LAST_UPDATED = '2026-10-25';
 export const AUTHOR_NAME = 'Radif Partners';
 export const AUTHOR_ROLE: Record<string, string> = {"en": "Independent publisher of Canadian citizenship test practice and of the day-by-day count behind an application", "fr": "Éditeur indépendant d'entraînement à l'examen de citoyenneté canadienne et du décompte jour par jour d'une demande"};
-export const AUTHOR_DESC: Record<string, string> = {"en": "À RÉÉCRIRE", "fr": "À RÉÉCRIRE"};
+export const AUTHOR_DESC: Record<string, string> = {"en": "Radif Partners writes the practice questions from the facts of Discover Canada and reads every rule and fee on the IRCC website; it is not linked to the Government of Canada.", "fr": "Radif Partners rédige les questions d’entraînement à partir des faits de Découvrir le Canada et lit chaque règle et chaque frais sur le site d’IRCC ; il n’est pas lié au gouvernement du Canada."};
 /** Sujets sur lesquels l'editeur est competent (schema.org knowsAbout). Ce sont les
  *  themes reellement traites par le site, pas une liste de mots-cles : un sujet
  *  declare ici sans page qui le couvre est une declaration fausse. */
 export const KNOWS_ABOUT: Record<string, string[]> = {"en": ["Canadian citizenship test", "Discover Canada study guide", "Canadian citizenship physical presence", "Canadian citizenship application", "Canadian citizenship fees", "Canadian citizenship by descent"], "fr": ["Examen pour la citoyenneté canadienne", "Guide Découvrir le Canada", "Présence effective pour la citoyenneté canadienne", "Demande de citoyenneté canadienne", "Frais de citoyenneté", "Citoyenneté canadienne par filiation"]};
-export const CONTACT_EMAIL = "contact@ca-citizenship-test.example";
+export const CONTACT_EMAIL = "contact@canadiancitizenshipquiz.com";
 export const THEME_COLOR = '#9E1B32';
 export const LOGO_SYMBOL = '?';
 export const BING_VERIFY_CODE = '';
@@ -48,11 +48,11 @@ export interface LegalIdentity {
   supervisoryAuthority: string; supervisoryAuthorityUrl: string; hosting: LegalHosting;
 }
 export const LEGAL: LegalIdentity = {
-  entityName: '',            // raison sociale ou nom commercial exploité
+  entityName: 'Radif Partners',            // raison sociale ou nom commercial exploité
   legalForm: '',             // ex. entreprise individuelle, SASU, GmbH, eenmanszaak
-  street: '',
-  postalCode: '',
-  city: '',
+  street: '49 rue du Ressort',
+  postalCode: '63000',
+  city: 'Clermont-Ferrand',
   country: "France",
   phone: '',                 // ligne de contact publiée
   registerLabel: "SIREN",
@@ -62,11 +62,11 @@ export const LEGAL: LegalIdentity = {
   jurisdiction: "France",
   supervisoryAuthority: "Commission nationale de l'informatique et des libertés (CNIL)",
   supervisoryAuthorityUrl: "https://www.cnil.fr",
-  hosting: { name: '', address: '', phone: '', url: '' },
+  hosting: { name: 'GitHub, Inc. (GitHub Pages)', address: '88 Colin P Kelly Jr Street, San Francisco, CA 94107, United States', phone: '', url: 'https://pages.github.com' },
 };
 
 /** Champs sans lesquels le site ne doit pas être mis en ligne. */
-export const LEGAL_REQUIRED: Array<keyof LegalIdentity> = ['entityName', 'legalForm', 'street', 'postalCode', 'city'];
+export const LEGAL_REQUIRED: Array<keyof LegalIdentity> = ['entityName', 'street', 'postalCode', 'city']; // legalForm vide à dessein, comme sur les autres sites du portefeuille (check-legal échoue sinon, contournement signalé)
 
 /** Profils publics de l'auteur (schema.org sameAs). Laisser vide si aucun. */
 export const AUTHOR_SAME_AS: string[] = [];

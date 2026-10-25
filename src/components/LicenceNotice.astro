@@ -1,0 +1,12 @@
+---
+/** Mention de droits en pied de toutes les pages, embeds compris (RECETTE §12.1, règle 3).
+ * Découvrir le Canada / Discover Canada est sous droit d'auteur de la Couronne, sans licence de
+ * réutilisation commerciale : les faits sont reformulés, aucun texte n'est reproduit. */
+interface Props { lang: 'en' | 'fr'; class?: string }
+const { lang, class: cls = 'text-xs text-navy-500' } = Astro.props;
+---
+{lang === 'en' ? (
+  <p class={cls} data-licence-notice>Practice questions written by Radif Partners from the facts of Discover Canada (© His Majesty the King in Right of Canada); no text of the guide or of the official test is reproduced. Independent site: not IRCC or the Government of Canada.</p>
+) : (
+  <p class={cls} data-licence-notice>Questions d’entraînement rédigées par Radif Partners à partir des faits de Découvrir le Canada (© Sa Majesté le Roi du chef du Canada) ; aucun texte du guide ni de l’examen officiel n’est reproduit. Site indépendant : ni IRCC ni le gouvernement du Canada.</p>
+)}

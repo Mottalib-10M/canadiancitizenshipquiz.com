@@ -1,0 +1,36 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { LAST_UPDATED } from '../../data/site-config';
+import { route } from '../../i18n/routes';
+import { breadcrumbSchema, articleSchema } from '../../lib/seo';
+import { helpers } from '../../lib/helpers';
+const lang = 'fr';
+const h = helpers(lang);
+const P = h.P;
+const C = P.ca.presence;
+const s = (k: Parameters<typeof h.src>[0], t: string) => h.src(k, t);
+---
+<PageLayout title="Méthode de l’examen blanc : questions, notation, 1 095 jours" description="Comment Quiz citoyenneté canadienne rédige ses questions, note un examen de 20 questions, compte les 1 095 jours de présence et additionne les frais d’IRCC." lang={lang} jsonLd={[articleSchema({ title: 'Méthode : questions, notation et dates', description: 'Méthode de Quiz citoyenneté canadienne', path: route('method', lang), lang }), breadcrumbSchema([{ name: 'Accueil', path: route('home', lang) }, { name: 'Méthode', path: route('method', lang) }])]} breadcrumbs={[{ label: 'Méthode' }]}>
+  <header class="mb-6"><p class="kicker">Méthode</p><h1 class="mt-0 text-3xl font-bold text-navy-900 md:text-4xl">Questions, notation et dates : la méthode</h1></header>
+  <div class="prose prose-slate max-w-none">
+    <p>Pages et outils lisent deux sortes de fichiers : les banques de questions et un fichier de paramètres qui contient les règles et les frais d’IRCC lus le {h.date(P.retrieved_at)}. Une note de passage, un montant ou un seuil n’est jamais saisi directement dans le texte d’une page : on modifie le fichier, et tout le site suit.</p>
+    <h2>1. La rédaction des questions</h2>
+    <p>La banque française compte {h.count} questions réparties sur les dix chapitres de Découvrir le Canada : {h.chapters.map((c, i) => `${h.inChapter(i)} sur « ${c} »`).join(', ')}. Chacune a une bonne réponse, trois mauvaises que nous avons écrites, une explication et la section du guide où vérifier le fait. Le guide relève du droit d’auteur de la Couronne et les conditions du gouvernement du Canada excluent la reproduction commerciale sans autorisation : seuls ses faits sont repris, ni ses phrases ni ses propres questions de révision. La banque française a été rédigée en français dès le départ, sans passer par l’anglais.</p>
+    <p>Deux sortes de questions sont exclues : celles dont la réponse est le titulaire actuel d’une fonction, et celles qui reposent sur un fait devenu inexact.</p>
+    <h2>2. Le tirage et la notation</h2>
+    <p>Un examen blanc a la forme de l’examen réel : {P.ca.test.questions} questions, {P.ca.test.minutes} minutes, réussite à {h.need} bonnes réponses (<Fragment set:html={s('ca_study', 'page d’étude d’IRCC')} />). Chaque tirage puise au hasard dans l’ensemble de la banque, mais à partir d’une graine : le même lien rejoue exactement la même série. Le chronomètre part à la première réponse ; une question restée sans réponse à la fin du temps compte comme une erreur. Les séries d’entraînement prennent dix questions d’un chapitre et corrigent chaque réponse aussitôt.</p>
+    <h2>3. Le compte des 1 095 jours</h2>
+    <p>L’outil teste les jours un par un, en partant d’aujourd’hui, jusqu’à trouver le premier où le total atteint {h.num(C.requiredDays)} jours dans les {C.windowYears} ans qui précèdent, dont au moins {h.num(C.minPrDays)} comme résident permanent (<Fragment set:html={s('ca_eligibility', 'conditions d’admissibilité')} />). Comme le prévoient les <Fragment set:html={s('ca_bulletin', 'instructions d’IRCC sur la présence effective')} />, le jour de la signature n’est pas compté, une absence ne se compte que pour une journée sans aucun moment passé au Canada, et chaque jour au Canada avant la résidence permanente compte pour moitié, jusqu’à {C.preprMaxCredit} jours. L’outil ne traite ni le temps passé en prison, en libération conditionnelle ou en probation, ni le service à l’étranger pour la Couronne : dans ces cas, utilisez la calculatrice officielle de votre compte IRCC.</p>
+    <h2>4. Les frais</h2>
+    <p>Les montants viennent de la <Fragment set:html={s('ca_fees', 'liste des frais d’IRCC')} />, modifiée le {h.date(P.ca.fees.dateModified)} : {h.cad(P.ca.fees.adult)} par adulte, frais de traitement et droit de citoyenneté de {h.cad(P.ca.fees.rightOfCitizenship)} compris. La part de traitement, {h.cad(P.ca.fees.adultProcessing)}, est la différence entre les deux, calculée par nous.</p>
+    <h2>5. Les contrôles</h2>
+    <p>À chaque construction, des tests s’assurent qu’aucune question ne répète un choix ni ne manque de bonne réponse, d’explication ou de source, qu’un examen compte {P.ca.test.questions} questions, que le crédit d’avant la résidence permanente s’arrête à {C.preprMaxCredit} jours, qu’un départ et un retour sur deux jours consécutifs ne retirent aucun jour et que les frais s’additionnent correctement. Tous les mois, un programme compare la liste des frais d’IRCC à nos montants et suspend la mise à jour en cas d’écart.</p>
+    <h2>6. Ce que le site ne fait pas</h2>
+    <ul>
+      <li>Il n’évalue ni les interdictions, ni les antécédents judiciaires, ni la validité du statut de résident permanent.</li>
+      <li>Il ne copie pas l’épreuve officielle et ne se présente pas comme telle.</li>
+      <li>Il ne transmet rien à IRCC : la demande se dépose uniquement dans le compte IRCC ou sur papier.</li>
+    </ul>
+    <p>Version de la méthode : {LAST_UPDATED}. Un chiffre vous semble faux : <a href={route('contact', lang)}>contact</a>.</p>
+  </div>
+</PageLayout>

@@ -1,7 +1,7 @@
 {
- "name": "Canada Citizenship Prep",
+ "name": "Canadian Citizenship Quiz",
  "short_name": "Citizenship Prep",
- "description": "À RÉÉCRIRE",
+ "description": "Free Canadian citizenship mock test (20 questions, 45 minutes) and 1,095-day calculator, in English and French. Independent site, not IRCC.",
  "start_url": "/en/",
  "display": "standalone",
  "background_color": "#ffffff",

@@ -1,30 +1,399 @@
 {
-  "_lisezmoi": "Tous les paramètres légaux du site vivent ici — jamais en dur dans le code (RECETTE-SITE.md §4). Renommer en params-<année>.json à chaque millésime. Chaque valeur doit être relue sur la source officielle citée avant d'être écrite, et retrieved_at mis à jour ce jour-là.",
+  "_lisezmoi": "Tous les paramètres du site vivent ici, jamais en dur (RECETTE §4). Relus sur canada.ca et ircc.canada.ca le 2026-10-25, contrôlés par scripts/update-data.py.",
   "year": 2026,
-  "retrieved_at": "AAAA-MM-JJ",
-  "valid_from": "2026-01-01",
-  "valid_to": "2026-12-31",
+  "retrieved_at": "2026-10-25",
   "sources": {
-    "principale": {
-      "url": "https://exemple.gouv.xx/page-officielle",
+    "ca_study": {
+      "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/canadian-citizenship/test/study.html",
+      "urlFr": "https://www.canada.ca/fr/immigration-refugies-citoyennete/services/citoyennete-canadienne/examen/etudier.html",
       "label": {
-        "fr": "Administration — intitulé exact de la page ou du texte",
-        "en": "Authority — exact title of the page or legal text"
+        "en": "IRCC: study for the citizenship test",
+        "fr": "IRCC : étudier pour l’examen pour la citoyenneté"
       }
     },
-    "loi": {
-      "url": "https://exemple.gouv.xx/texte-de-loi",
+    "ca_guide": {
+      "url": "https://www.canada.ca/en/immigration-refugees-citizenship/corporate/publications-manuals/discover-canada.html",
+      "urlFr": "https://www.canada.ca/fr/immigration-refugies-citoyennete/organisation/publications-guides/decouvrir-canada.html",
       "label": {
-        "fr": "Loi / code — article précis appliqué par le moteur",
-        "en": "Act / code — the exact article the engine applies"
+        "en": "IRCC: Discover Canada, the official study guide",
+        "fr": "IRCC : Découvrir le Canada, le guide d’étude officiel"
       }
     },
-    "bareme": {
-      "url": "https://exemple.gouv.xx/bareme-annuel",
+    "ca_test": {
+      "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/canadian-citizenship/test/how-it-works.html",
       "label": {
-        "fr": "Barème ou circulaire annuelle, millésime 2026",
-        "en": "Annual schedule or circular, 2026 edition"
+        "en": "IRCC: how the citizenship test works",
+        "fr": "IRCC : déroulement de l’examen pour la citoyenneté"
+      },
+      "urlFr": "https://www.canada.ca/fr/immigration-refugies-citoyennete/services/citoyennete-canadienne/examen/fonctionnement.html"
+    },
+    "ca_results": {
+      "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/canadian-citizenship/test/results.html",
+      "label": {
+        "en": "IRCC: citizenship test results and next steps",
+        "fr": "IRCC : résultats de l’examen et étapes suivantes"
+      },
+      "urlFr": "https://www.canada.ca/fr/immigration-refugies-citoyennete/services/citoyennete-canadienne/examen/resultats.html"
+    },
+    "ca_online": {
+      "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/canadian-citizenship/test/online.html",
+      "label": {
+        "en": "IRCC: taking the citizenship test online",
+        "fr": "IRCC : passer l’examen en ligne"
+      },
+      "urlFr": "https://www.canada.ca/fr/immigration-refugies-citoyennete/services/citoyennete-canadienne/examen/en-ligne.html"
+    },
+    "ca_missed": {
+      "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/canadian-citizenship/test/missed.html",
+      "label": {
+        "en": "IRCC: if you miss your citizenship test",
+        "fr": "IRCC : examen manqué"
+      },
+      "urlFr": "https://www.canada.ca/fr/immigration-refugies-citoyennete/services/citoyennete-canadienne/examen/manquer.html"
+    },
+    "ca_eligibility": {
+      "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/canadian-citizenship/adult-minor/who.html",
+      "urlFr": "https://www.canada.ca/fr/immigration-refugies-citoyennete/services/citoyennete-canadienne/adulte-mineur/qui.html",
+      "label": {
+        "en": "IRCC: Canadian citizenship, who can apply",
+        "fr": "IRCC : citoyenneté canadienne, conditions d’admissibilité"
       }
+    },
+    "ca_bulletin": {
+      "url": "https://www.canada.ca/en/immigration-refugees-citizenship/corporate/publications-manuals/operational-bulletins-manuals/canadian-citizenship/grant/residence/calculate-physical-presence.html",
+      "label": {
+        "en": "IRCC program delivery instructions: calculating physical presence",
+        "fr": "IRCC : instructions sur le calcul de la présence effective (en anglais)"
+      },
+      "urlFr": "https://www.canada.ca/fr/immigration-refugies-citoyennete/organisation/publications-guides/bulletins-guides-operationnels/citoyennete-canadienne/attribution/residence/calcul-periode-presence-effective.html"
+    },
+    "ca_rescalc": {
+      "url": "https://eservices.cic.gc.ca/rescalc/",
+      "label": {
+        "en": "IRCC: official physical presence calculator",
+        "fr": "IRCC : calculateur officiel de la présence effective"
+      }
+    },
+    "ca_fees": {
+      "url": "https://ircc.canada.ca/english/information/fees/fees.asp",
+      "urlFr": "https://ircc.canada.ca/francais/information/frais/bareme.asp",
+      "label": {
+        "en": "IRCC: fee list (citizenship)",
+        "fr": "IRCC : liste des frais (citoyenneté)"
+      }
+    },
+    "ca_how": {
+      "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/canadian-citizenship/adult-minor/how.html",
+      "urlFr": "https://www.canada.ca/fr/immigration-refugies-citoyennete/services/citoyennete-canadienne/adulte-mineur/comment.html",
+      "label": {
+        "en": "IRCC: how to apply for citizenship",
+        "fr": "IRCC : comment présenter une demande de citoyenneté"
+      }
+    },
+    "ca_docs": {
+      "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/canadian-citizenship/adult-minor/how/adult-forms-documents.html",
+      "urlFr": "https://www.canada.ca/fr/immigration-refugies-citoyennete/services/citoyennete-canadienne/adulte-mineur/comment/adulte-formulaires-documents.html",
+      "label": {
+        "en": "IRCC: adult forms and documents",
+        "fr": "IRCC : formulaires et documents pour adultes"
+      }
+    },
+    "ca_language": {
+      "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/canadian-citizenship/become-canadian-citizen/eligibility/language-proof.html",
+      "urlFr": "https://www.canada.ca/fr/immigration-refugies-citoyennete/services/citoyennete-canadienne/devenir-citoyen-canadien/admissibilite/preuve-competences-linguistiques.html",
+      "label": {
+        "en": "IRCC: proof of language skills",
+        "fr": "IRCC : preuve des compétences linguistiques"
+      }
+    },
+    "ca_language_tests": {
+      "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/canadian-citizenship/become-canadian-citizen/eligibility/language-proof/step-2.html",
+      "urlFr": "https://www.canada.ca/fr/immigration-refugies-citoyennete/services/citoyennete-canadienne/devenir-citoyen-canadien/admissibilite/preuve-competences-linguistiques/etape-2.html",
+      "label": {
+        "en": "IRCC: accepted language tests",
+        "fr": "IRCC : tests de langue acceptés"
+      }
+    },
+    "ca_prohibitions": {
+      "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/canadian-citizenship/become-canadian-citizen/eligibility/situtations-prevent-citizenship.html",
+      "urlFr": "https://www.canada.ca/fr/immigration-refugies-citoyennete/services/citoyennete-canadienne/devenir-citoyen-canadien/admissibilite/situations-empecher-citoyennete.html",
+      "label": {
+        "en": "IRCC: situations that may prevent citizenship",
+        "fr": "IRCC : situations qui peuvent empêcher d’obtenir la citoyenneté"
+      }
+    },
+    "ca_ceremony": {
+      "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/canadian-citizenship/become-canadian-citizen/citizenship-ceremony.html",
+      "urlFr": "https://www.canada.ca/fr/immigration-refugies-citoyennete/services/citoyennete-canadienne/devenir-citoyen-canadien/ceremonie-citoyennete.html",
+      "label": {
+        "en": "IRCC: the citizenship ceremony",
+        "fr": "IRCC : la cérémonie de citoyenneté"
+      }
+    },
+    "ca_ceremony_expect": {
+      "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/canadian-citizenship/become-canadian-citizen/citizenship-ceremony/expect.html",
+      "urlFr": "https://www.canada.ca/fr/immigration-refugies-citoyennete/services/citoyennete-canadienne/devenir-citoyen-canadien/ceremonie-citoyennete/attendre.html",
+      "label": {
+        "en": "IRCC: what to expect at the ceremony",
+        "fr": "IRCC : à quoi s’attendre à la cérémonie"
+      }
+    },
+    "ca_ceremony_when": {
+      "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/canadian-citizenship/become-canadian-citizen/citizenship-ceremony/when.html",
+      "urlFr": "https://www.canada.ca/fr/immigration-refugies-citoyennete/services/citoyennete-canadienne/devenir-citoyen-canadien/ceremonie-citoyennete/quand.html",
+      "label": {
+        "en": "IRCC: when your ceremony is",
+        "fr": "IRCC : date de la cérémonie"
+      }
+    },
+    "ca_ceremony_bring": {
+      "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/canadian-citizenship/become-canadian-citizen/citizenship-ceremony/bring.html",
+      "urlFr": "https://www.canada.ca/fr/immigration-refugies-citoyennete/services/citoyennete-canadienne/devenir-citoyen-canadien/ceremonie-citoyennete/apporter.html",
+      "label": {
+        "en": "IRCC: what to bring to the ceremony",
+        "fr": "IRCC : quoi apporter à la cérémonie"
+      }
+    },
+    "ca_renounce": {
+      "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/canadian-citizenship/renounce-canadian-citizenship/eligibility.html",
+      "urlFr": "https://www.canada.ca/fr/immigration-refugies-citoyennete/services/citoyennete-canadienne/repudiation-citoyennete-canadienne/admissibilite.html",
+      "label": {
+        "en": "IRCC: who can renounce citizenship",
+        "fr": "IRCC : qui peut répudier la citoyenneté"
+      }
+    },
+    "ca_renounce_apply": {
+      "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/canadian-citizenship/renounce-canadian-citizenship/apply.html",
+      "urlFr": "https://www.canada.ca/fr/immigration-refugies-citoyennete/services/citoyennete-canadienne/repudiation-citoyennete-canadienne/presenter-demande.html",
+      "label": {
+        "en": "IRCC: how to renounce",
+        "fr": "IRCC : présenter une demande de répudiation"
+      }
+    },
+    "ca_resume": {
+      "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/canadian-citizenship/resume-canadian-citizenship/eligibility.html",
+      "urlFr": "https://www.canada.ca/fr/immigration-refugies-citoyennete/services/citoyennete-canadienne/reintegrer-citoyennete-canadienne/admissibilite.html",
+      "label": {
+        "en": "IRCC: who can resume citizenship",
+        "fr": "IRCC : qui peut être réintégré dans la citoyenneté"
+      }
+    },
+    "ca_resume_apply": {
+      "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/canadian-citizenship/resume-canadian-citizenship/apply.html",
+      "urlFr": "https://www.canada.ca/fr/immigration-refugies-citoyennete/services/citoyennete-canadienne/reintegrer-citoyennete-canadienne/presenter-demande.html",
+      "label": {
+        "en": "IRCC: how to apply to resume",
+        "fr": "IRCC : demande de réintégration"
+      }
+    },
+    "ca_proof": {
+      "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/canadian-citizenship/proof-citizenship/about.html",
+      "urlFr": "https://www.canada.ca/fr/immigration-refugies-citoyennete/services/citoyennete-canadienne/preuve-citoyennete/au-sujet.html",
+      "label": {
+        "en": "IRCC: citizenship certificate",
+        "fr": "IRCC : certificat de citoyenneté"
+      }
+    },
+    "ca_proof_elig": {
+      "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/canadian-citizenship/proof-citizenship/eligibility.html",
+      "urlFr": "https://www.canada.ca/fr/immigration-refugies-citoyennete/services/citoyennete-canadienne/preuve-citoyennete/admissibilite.html",
+      "label": {
+        "en": "IRCC: who can get a citizenship certificate",
+        "fr": "IRCC : qui peut obtenir un certificat"
+      }
+    },
+    "ca_proof_apply": {
+      "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/canadian-citizenship/proof-citizenship/apply.html",
+      "urlFr": "https://www.canada.ca/fr/immigration-refugies-citoyennete/services/citoyennete-canadienne/preuve-citoyennete/presenter-demande.html",
+      "label": {
+        "en": "IRCC: apply for a citizenship certificate",
+        "fr": "IRCC : demander un certificat de citoyenneté"
+      }
+    },
+    "ca_records": {
+      "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/canadian-citizenship/proof-citizenship/search-records.html",
+      "urlFr": "https://www.canada.ca/fr/immigration-refugies-citoyennete/services/citoyennete-canadienne/preuve-citoyennete/recherche-dossiers.html",
+      "label": {
+        "en": "IRCC: search citizenship records",
+        "fr": "IRCC : recherche de dossiers de citoyenneté"
+      }
+    },
+    "ca_c3": {
+      "url": "https://www.canada.ca/en/immigration-refugees-citizenship/news/2025/12/bill-c-3-an-act-to-amend-the-citizenship-act-2025-comes-into-effect.html",
+      "urlFr": "https://www.canada.ca/fr/immigration-refugies-citoyennete/nouvelles/2025/12/entree-en-vigueur-du-projet-de-loi-c-3--loi-modifiant-la-loi-sur-la-citoyennete-2025.html",
+      "label": {
+        "en": "IRCC: Bill C-3 comes into effect",
+        "fr": "IRCC : entrée en vigueur du projet de loi C-3"
+      }
+    },
+    "ca_rules2025": {
+      "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/canadian-citizenship/act-changes/rules-2025.html",
+      "urlFr": "https://www.canada.ca/fr/immigration-refugies-citoyennete/services/citoyennete-canadienne/modifications-loi/regles-2025.html",
+      "label": {
+        "en": "IRCC: citizenship rules since 2025",
+        "fr": "IRCC : règles de citoyenneté depuis 2025"
+      }
+    },
+    "ca_calc_page": {
+      "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/canadian-citizenship/adult-minor/how/physical-presence.html",
+      "urlFr": "https://www.canada.ca/fr/immigration-refugies-citoyennete/services/citoyennete-canadienne/adulte-mineur/comment/calculatrice.html",
+      "label": {
+        "en": "IRCC: physical presence calculator instructions",
+        "fr": "IRCC : calculatrice de présence effective"
+      }
+    },
+    "ca_act": {
+      "url": "https://laws-lois.justice.gc.ca/eng/acts/c-29/",
+      "urlFr": "https://laws-lois.justice.gc.ca/fra/lois/c-29/",
+      "label": {
+        "en": "Citizenship Act (R.S.C. 1985, c. C-29)",
+        "fr": "Loi sur la citoyenneté (L.R.C. 1985, ch. C-29)"
+      }
+    },
+    "ca_after": {
+      "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/canadian-citizenship/adult-minor/after.html",
+      "urlFr": "https://www.canada.ca/fr/immigration-refugies-citoyennete/services/citoyennete-canadienne/adulte-mineur/apres.html",
+      "label": {
+        "en": "IRCC: after you apply for citizenship",
+        "fr": "IRCC : après avoir présenté une demande de citoyenneté"
+      }
+    },
+    "ca_eval": {
+      "url": "https://www.canada.ca/en/immigration-refugees-citizenship/corporate/reports-statistics/evaluations/eval-citizenship-2013-2018.html",
+      "label": {
+        "en": "IRCC: Evaluation of the Citizenship Program (2013 to 2018)",
+        "fr": "IRCC : évaluation du programme de citoyenneté, 2013 à 2018"
+      },
+      "urlFr": "https://www.canada.ca/fr/immigration-refugies-citoyennete/organisation/rapports-statistiques/evaluations/eval-citoyennete-2013-2018.html"
+    }
+  },
+  "ca": {
+    "test": {
+      "questions": 20,
+      "minutes": 45,
+      "passCorrect": 15,
+      "attempts": 3,
+      "ages": [
+        18,
+        54
+      ],
+      "languages": [
+        "en",
+        "fr"
+      ],
+      "guide": {
+        "en": "Discover Canada: The Rights and Responsibilities of Citizenship",
+        "fr": "Découvrir le Canada : Les droits et responsabilités liés à la citoyenneté"
+      },
+      "source": {
+        "en": "https://www.canada.ca/en/immigration-refugees-citizenship/services/canadian-citizenship/test/study.html",
+        "fr": "https://www.canada.ca/fr/immigration-refugies-citoyennete/services/citoyennete-canadienne/examen/etudier.html"
+      },
+      "pageDate": {
+        "en": "2026-03-31",
+        "fr": "2025-09-11"
+      },
+      "onlineWindowDays": 30,
+      "missedOnlineNewWindow": true
+    },
+    "presence": {
+      "requiredDays": 1095,
+      "windowYears": 5,
+      "preprFactor": 0.5,
+      "preprMaxCredit": 365,
+      "absenceCounting": "only-days-with-no-time-in-canada",
+      "absenceCountingQuote": "Absences will be calculated only for days where an applicant spent no time at all in Canada.",
+      "applicationDayCounted": false,
+      "taxYearsRequired": 3,
+      "languageLevel": "CLB/NCLC 4",
+      "languageAges": [
+        18,
+        54
+      ],
+      "sources": [
+        "https://www.canada.ca/en/immigration-refugees-citizenship/services/canadian-citizenship/become-canadian-citizen/eligibility.html",
+        "https://www.canada.ca/en/immigration-refugees-citizenship/corporate/publications-manuals/operational-bulletins-manuals/canadian-citizenship/grant/residence/calculate-physical-presence.html"
+      ],
+      "minPrDays": 730
+    },
+    "fees": {
+      "adult": 653,
+      "adultProcessing": 530,
+      "rightOfCitizenship": 123,
+      "minor": 100,
+      "dateModified": "2026-09-21",
+      "source": {
+        "en": "https://ircc.canada.ca/english/information/fees/fees.asp",
+        "fr": "https://ircc.canada.ca/francais/information/frais/bareme.asp"
+      },
+      "certificate": 75,
+      "recordSearch": 75,
+      "statelessAdult": 123,
+      "resumeAdult": 530,
+      "resumeMinor": 100,
+      "renounce": 100
+    },
+    "hearing": {
+      "minMinutes": 30,
+      "maxMinutes": 90,
+      "knowledgeQuestions": 20,
+      "knowledgePass": 15,
+      "languageQuestions": 9,
+      "languagePass": 6
+    },
+    "application": {
+      "returnAfterDays": 90,
+      "policeCertDaysInRow": 183,
+      "policeCertYears": 4,
+      "photosMm": [
+        50,
+        70
+      ],
+      "faceMm": [
+        31,
+        36
+      ],
+      "groupMinorsMax": 20,
+      "minorSignAge": 14,
+      "replyDays": 30,
+      "tellIrccAbsenceWeeks": 2
+    },
+    "ceremony": {
+      "oathFromAge": 14,
+      "noticeWeeks": 1,
+      "rescheduleDays": 30
+    },
+    "resume": {
+      "presenceDays": 365,
+      "windowYears": 2,
+      "cafDays": 182,
+      "taxYears": 1
+    },
+    "renounce": {
+      "minAge": 18
+    },
+    "proof": {
+      "onlineDays": 60,
+      "recordLetterValidYears": 1,
+      "paperBornBefore": "1977-02-14",
+      "paperNaturalizedBefore": "2009-04-16"
+    },
+    "c3": {
+      "inForce": "2025-12-15",
+      "royalAssent": "2025-11-20",
+      "parentDays": 1095
+    },
+    "prohibitions": {
+      "convictionYears": 4,
+      "misrepresentationYears": 5,
+      "fraudRevocationYears": 10
+    },
+    "languageTests": {
+      "CELPIP-G": "4 / 4",
+      "IELTS General Training": "4.5 / 4.0",
+      "PTE Core": "28 / 42",
+      "TEF Canada": "B1",
+      "TCF Canada": "B1"
     }
   }
 }

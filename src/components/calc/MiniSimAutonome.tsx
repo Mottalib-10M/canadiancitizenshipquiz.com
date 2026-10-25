@@ -52,7 +52,7 @@ function Field({ id, label, value, onChange, unit, max = 1e9, decimals = 0, loca
 
 interface Props { kind: string; lang?: string; href?: string; locale?: string }
 
-export default function MiniSimAutonome({ kind, lang = 'en', href, locale = 'en-GB' }: Props) {
+export default function MiniSimAutonome({ kind, lang = 'en', href, locale = 'en-CA' }: Props) {
   const spec = getSpec(kind, lang);
   const [v, setV] = useState<Record<string, number>>(() => Object.fromEntries(spec.inputs.map((i) => [i.id, i.def])));
   const out = useMemo(() => spec.run(v), [v, spec]);

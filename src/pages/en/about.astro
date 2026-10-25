@@ -1,0 +1,30 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { LAST_UPDATED, AUTHOR_NAME, CONTACT_EMAIL, AUTHOR_ROLE } from '../../data/site-config';
+import { route } from '../../i18n/routes';
+import { organizationSchema, breadcrumbSchema, profilePageSchema } from '../../lib/seo';
+import { displayDate } from '../../lib/format';
+import { helpers } from '../../lib/helpers';
+const lang = 'en';
+const h = helpers(lang);
+const P = h.P;
+---
+<PageLayout title="Question writers: who runs the Canadian Citizenship Quiz" description="Who publishes Canadian Citizenship Quiz, how its English and French questions are written, where each IRCC rule and fee comes from, and what it never sells." lang={lang} jsonLd={[organizationSchema(lang), profilePageSchema({ path: route('about', lang), lang }), breadcrumbSchema([{ name: 'Home', path: route('home', lang) }, { name: 'About', path: route('about', lang) }])]} breadcrumbs={[{ label: 'About' }]}>
+  <header class="mb-6"><p class="kicker">About</p><h1 class="mt-0 text-3xl font-bold text-navy-900 md:text-4xl">Who is behind Canadian Citizenship Quiz</h1></header>
+  <div class="prose prose-slate max-w-none">
+    <div class="not-prose mb-6"><p class="text-lg font-semibold text-navy-900">{AUTHOR_NAME}</p><p class="text-navy-700">{AUTHOR_ROLE[lang]}</p></div>
+    <p>Canadian Citizenship Quiz is run by Radif Partners, a company that turns published government rules into free, open tools. The English side is written for permanent residents preparing for the test in English, and for the relatives, teachers and settlement workers who coach them; a separate French side serves applicants who will sit it in French.</p>
+    <h2>What you can do here</h2>
+    <p>Rehearse test day: {P.ca.test.questions} questions against a {P.ca.test.minutes}-minute clock, pass at {h.need}. Revise one chapter at a time with the full bank and an explanation for every answer. Then prepare the application: the first day your {h.num(P.ca.presence.requiredDays)} days of physical presence are met with your trips counted, IRCC fees for the household, and each step through to the oath.</p>
+    <p>No account, email address or subscription is asked for; calculations run in your browser and stay there.</p>
+    <h2>Sources</h2>
+    <p>Our {h.count} English questions were written from facts in Discover Canada; the French ones were written separately, in French. Each rule and amount comes from an IRCC page, the Citizenship Act or IRCC's physical presence instructions, and the page using it links to it. The <a href={route('method', lang)}>method page</a> has the details.</p>
+    <h2>What this site is not</h2>
+    <p>Not IRCC or another public body, not a law firm, not a licensed consultant. It invites nobody to a test, takes no application and sees no file; its questions are exercises, not the official ones. No coat of arms or government logo appears on it.</p>
+    <h2>Funding</h2>
+    <p>Nothing is sold here: no course, manual, app or legal service, no commission and no paid link. Should advertising ever appear, it would never be placed in front of a test.</p>
+    <h2>Reporting a mistake</h2>
+    <p>Email <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> with the figure concerned or the opening words of the question. What happens next is described in the <a href={route('editorial', lang)}>editorial policy</a>.</p>
+    <p class="text-sm text-navy-600">Rules and fees last checked on <time datetime={LAST_UPDATED}>{displayDate(LAST_UPDATED, 'en-CA')}</time>.</p>
+  </div>
+</PageLayout>

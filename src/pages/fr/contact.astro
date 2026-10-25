@@ -1,0 +1,24 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import LegalIdentity from '../../components/LegalIdentity.astro';
+import { CONTACT_EMAIL, LAST_UPDATED, SITE_NAMES } from '../../data/site-config';
+import { route } from '../../i18n/routes';
+const lang = 'fr';
+---
+<PageLayout title={`Contact : ${SITE_NAMES[lang]}, frais, questions, widget`} description="Écrire à Quiz citoyenneté canadienne quand un frais d’IRCC ou la règle des 1 095 jours semble périmé, si une question paraît fausse, ou pour intégrer l’examen." lang={lang} noindex={true} breadcrumbs={[{ label: 'Contact' }]} showAuthor={false}>
+  <div class="prose prose-slate max-w-none">
+    <h1>Contact</h1>
+    <p>Courriel : <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>. Une personne de Radif Partners lit chaque message.</p>
+    <h2>Un frais ou une règle d’IRCC paraît dépassé</h2>
+    <p>Précisez le chiffre en cause et, si possible, le lien vers la page de canada.ca qui en donne un autre. IRCC ne met pas à jour sa liste des frais et ses pages sur l’examen le même jour : deux de ses pages peuvent donc se contredire quelque temps. Nous retournons à la page d’IRCC, rectifions la valeur dans notre fichier de paramètres et notons la date de la correction.</p>
+    <h2>Une question d’entraînement semble erronée</h2>
+    <p>Envoyez le début de la question. Son explication cite la section de Découvrir le Canada sur laquelle elle s’appuie ; si le guide ne correspond plus aux faits d’aujourd’hui, la question est réécrite ou supprimée.</p>
+    <h2>Ce que nous ne faisons pas</h2>
+    <p>Ce site n’est pas IRCC et ne donne aucun conseil en immigration. Il ne fixe aucun examen, n’a accès à aucun dossier et ne répond pas sur un cas particulier. Gardez vos données personnelles pour vous : ni IUC, ni passeport, ni numéro de demande, ni date de naissance dans vos courriels.</p>
+    <h2>Afficher l’examen blanc sur votre site</h2>
+    <p>Bibliothèques publiques, cégeps, classes de francisation et organismes d’accueil peuvent l’intégrer sans frais : le code figure sur la <a href={route('widget', lang)}>page d’intégration</a>.</p>
+    <h2>Éditeur</h2>
+    <LegalIdentity lang={lang} />
+    <p>Mise à jour : {LAST_UPDATED}.</p>
+  </div>
+</PageLayout>

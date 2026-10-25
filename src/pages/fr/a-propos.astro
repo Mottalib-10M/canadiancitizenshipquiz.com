@@ -1,0 +1,30 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { LAST_UPDATED, AUTHOR_NAME, CONTACT_EMAIL, AUTHOR_ROLE } from '../../data/site-config';
+import { route } from '../../i18n/routes';
+import { organizationSchema, breadcrumbSchema, profilePageSchema } from '../../lib/seo';
+import { displayDate } from '../../lib/format';
+import { helpers } from '../../lib/helpers';
+const lang = 'fr';
+const h = helpers(lang);
+const P = h.P;
+---
+<PageLayout title="Quiz citoyenneté canadienne : qui écrit les questions" description="Qui publie Quiz citoyenneté canadienne, comment ses questions sont rédigées en français, d’où viennent les règles et frais d’IRCC, ce qu’il ne vend pas." lang={lang} jsonLd={[organizationSchema(lang), profilePageSchema({ path: route('about', lang), lang }), breadcrumbSchema([{ name: 'Accueil', path: route('home', lang) }, { name: 'À propos', path: route('about', lang) }])]} breadcrumbs={[{ label: 'À propos' }]}>
+  <header class="mb-6"><p class="kicker">À propos</p><h1 class="mt-0 text-3xl font-bold text-navy-900 md:text-4xl">Qui publie Quiz citoyenneté canadienne</h1></header>
+  <div class="prose prose-slate max-w-none">
+    <div class="not-prose mb-6"><p class="text-lg font-semibold text-navy-900">{AUTHOR_NAME}</p><p class="text-navy-700">{AUTHOR_ROLE[lang]}</p></div>
+    <p>Derrière Quiz citoyenneté canadienne se trouve Radif Partners, une entreprise qui conçoit des outils en accès libre à partir des textes et barèmes publiés par les administrations. La version française vise les résidents permanents qui feront leur examen en français, au Québec, en Acadie, en Ontario ou dans l’Ouest, ainsi que les enseignants de francisation et les intervenants qui les épaulent.</p>
+    <h2>À quoi sert le site</h2>
+    <p>D’abord à s’exercer dans les conditions du jour J : {P.ca.test.questions} questions, {P.ca.test.minutes} minutes, réussite à {h.need} bonnes réponses. Ensuite à réviser chapitre par chapitre, avec la banque complète et l’explication de chaque réponse. Enfin à préparer la demande elle-même : premier jour où les {h.num(P.ca.presence.requiredDays)} jours de présence effective sont atteints, voyages compris, frais d’IRCC pour toute la famille, étapes jusqu’au serment.</p>
+    <p>Aucun compte n’est demandé, aucune adresse courriel, aucun abonnement : les calculs se font dans votre navigateur et n’en sortent pas.</p>
+    <h2>Les sources</h2>
+    <p>Nos {h.count} questions françaises sont rédigées en français, à partir des faits du guide Découvrir le Canada, sans traduction de la banque anglaise. Chaque règle et chaque montant vient d’une page d’IRCC, de la Loi sur la citoyenneté ou des instructions d’IRCC sur la présence effective, et la page concernée en donne le lien. Le détail figure dans la <a href={route('method', lang)}>méthode</a>.</p>
+    <h2>Ce que le site n’est pas</h2>
+    <p>Ni IRCC, ni un autre organisme public, ni un cabinet, ni un consultant en immigration. Le site ne convoque personne, ne reçoit aucune demande et ne voit aucun dossier ; ses questions sont des exercices, pas celles de l’épreuve officielle. Il n’affiche ni armoiries ni logo du gouvernement.</p>
+    <h2>Financement</h2>
+    <p>Rien n’est vendu ici : pas de formation, de manuel, d’application ou de service juridique, pas de commission ni de lien rémunéré. Une éventuelle publicité ne passerait jamais devant un examen.</p>
+    <h2>Une erreur à signaler</h2>
+    <p>Un courriel à <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> suffit, avec le chiffre en cause ou le début de la question. La <a href={route('editorial', lang)}>politique éditoriale</a> décrit la suite donnée.</p>
+    <p class="text-sm text-navy-600">Règles et frais vérifiés le <time datetime={LAST_UPDATED}>{displayDate(LAST_UPDATED, 'fr-CA')}</time>.</p>
+  </div>
+</PageLayout>

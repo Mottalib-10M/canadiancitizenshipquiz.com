@@ -1,0 +1,25 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { AUTHOR_NAME, CONTACT_EMAIL, LAST_UPDATED, SITE_NAMES } from '../../data/site-config';
+import { route } from '../../i18n/routes';
+const lang = 'fr';
+---
+<PageLayout title={`Politique éditoriale : ${SITE_NAMES[lang]}, sources`} description="Les pages d’IRCC et les lois sur lesquelles s’appuie Quiz citoyenneté canadienne, la rédaction des questions, les sources refusées et la correction des erreurs." lang={lang} noindex={true} breadcrumbs={[{ label: 'Politique éditoriale' }]} showAuthor={false}>
+  <div class="prose prose-slate max-w-none">
+    <h1>Politique éditoriale et de correction</h1>
+    <p>Ces pages servent à choisir le jour où l’on dépose une demande de citoyenneté et à préparer l’examen qui décide de sa suite. Un compte de jours faux ou un frais périmé peut entraîner le retour de la demande : chaque chiffre est donc rattaché à la page gouvernementale où il a été lu, avec la date de lecture.</p>
+    <h2>Responsable</h2><p>{AUTHOR_NAME}, joignable à <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.</p>
+    <h2>Ce que nous lisons</h2>
+    <ul>
+      <li>les pages d’IRCC sur l’examen, ses résultats, l’examen en ligne et l’examen manqué ; l’admissibilité ; la façon de présenter une demande ; la preuve de langue ; la cérémonie ; la répudiation, la réintégration et la preuve de citoyenneté ; la liste des frais ;</li>
+      <li>les instructions d’IRCC sur le calcul de la présence effective ;</li>
+      <li>la Loi sur la citoyenneté, sur le site Lois du Canada, et le communiqué d’IRCC sur le projet de loi C-3 ;</li>
+      <li>Découvrir le Canada, uniquement pour les faits à l’origine des questions.</li>
+    </ul>
+    <h2>Rédaction des questions</h2><p>Chaque question part d’un fait du guide, formulé avec nos mots et accompagné de trois mauvaises réponses que nous avons écrites. Aucune n’est empruntée à un manuel, à une application mobile, à un site concurrent ou à une séance réelle de l’examen, et aucune n’est présentée comme officielle.</p>
+    <h2>Sources refusées</h2><p>Aucun chiffre du site ne provient d’un cabinet, d’un consultant, d’un forum ou d’un autre site de préparation. Ce qui ne se retrouve pas sur une page gouvernementale reste hors du site.</p>
+    <h2>Révision</h2><p>Une fois par mois, un programme relit la liste des frais d’IRCC ; au moindre montant différent du nôtre, il arrête la mise à jour jusqu’à ce qu’une personne vérifie. La date de la dernière révision figure sur chaque page.</p>
+    <h2>Corrections</h2><ol><li>La page gouvernementale est relue.</li><li>La valeur ou la question est rectifiée, et un test automatique couvre désormais ce cas.</li><li>Le site reconstruit porte la nouvelle date de révision.</li></ol>
+    <h2>Indépendance</h2><p>Personne en dehors de Radif Partners, qu’il s’agisse d’un cabinet, d’un consultant, d’un éditeur ou d’un gouvernement, ne finance ni n’approuve ces pages, et aucun de leurs liens ne rapporte de commission. Voir aussi la <a href={route('method', lang)}>méthode</a>. Version : {LAST_UPDATED}.</p>
+  </div>
+</PageLayout>

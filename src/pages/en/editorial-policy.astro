@@ -1,0 +1,26 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { AUTHOR_NAME, CONTACT_EMAIL, LAST_UPDATED, SITE_NAMES } from '../../data/site-config';
+import { route } from '../../i18n/routes';
+const lang = 'en';
+---
+<PageLayout title={`Editorial policy of ${SITE_NAMES[lang]}: sources`} description="The IRCC pages and laws Canadian Citizenship Quiz relies on, how its questions are written from Discover Canada, which sources it refuses, how a fix is dated." lang={lang} noindex={true} breadcrumbs={[{ label: 'Editorial policy' }]} showAuthor={false}>
+  <div class="prose prose-slate max-w-none">
+    <h1>Editorial and corrections policy</h1>
+    <p>Readers use these pages to decide the day they send a citizenship application and to prepare for a test that decides whether it goes ahead. A wrong day count or an old fee can mean a returned application, so each figure is tied to the government page it was read on, with the date of that reading.</p>
+    <h2>Who is responsible</h2><p>{AUTHOR_NAME}, reachable at <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.</p>
+    <h2>What we read</h2>
+    <ul>
+      <li>Immigration, Refugees and Citizenship Canada: the test, results, online test and missed test pages; who can apply; how to apply and the adult document list; language proof; the ceremony pages; renouncing, resuming and proof of citizenship; the fee list;</li>
+      <li>the program delivery instructions on calculating physical presence;</li>
+      <li>the Citizenship Act on the Justice Laws website, and the IRCC release on Bill C-3;</li>
+      <li>Discover Canada, for the facts behind the practice questions only.</li>
+    </ul>
+    <h2>How the questions are written</h2><p>Each question starts from one fact in Discover Canada, put in our own words with three wrong answers we wrote. None is borrowed from a published book, a mobile app, a competing practice site or an actual sitting of the test, and none is presented as official.</p>
+    <h2>Sources we refuse</h2><p>No number on this site comes from a law firm, a consultant, a forum or another test-prep site. If a rule cannot be traced to a government page, it is not published.</p>
+    <h2>Review cycle</h2><p>A script compares the IRCC fee list with our parameter file every month and stops the update when an amount differs. The test and eligibility pages are re-read when IRCC changes them. The date of the latest review is printed on each page.</p>
+    <h2>Corrections</h2>
+    <ol><li>The government page is read again.</li><li>The value or the question is fixed, and an automated test is written for that case.</li><li>The rebuilt site carries the new review date.</li></ol>
+    <h2>Independence</h2><p>Nobody outside Radif Partners, whether firm, consultant, publisher or government, funds or approves these pages, and none of their links earns a commission. See also the <a href={route('method', lang)}>method page</a>. Version: {LAST_UPDATED}.</p>
+  </div>
+</PageLayout>

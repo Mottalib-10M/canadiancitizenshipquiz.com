@@ -1,0 +1,37 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { LAST_UPDATED } from '../../data/site-config';
+import { route } from '../../i18n/routes';
+import { breadcrumbSchema, articleSchema } from '../../lib/seo';
+import { helpers } from '../../lib/helpers';
+const lang = 'en';
+const h = helpers(lang);
+const P = h.P;
+const C = P.ca.presence;
+const s = (k: Parameters<typeof h.src>[0], t: string) => h.src(k, t);
+---
+<PageLayout title="Mock test method: questions, 15/20 marking, 1,095 days" description="How Canadian Citizenship Quiz writes its questions from Discover Canada, marks a 20-question mock test, counts the 1,095 days and adds up the IRCC fees." lang={lang} jsonLd={[articleSchema({ title: 'How the questions, marking and dates are built', description: 'Method of Canadian Citizenship Quiz', path: route('method', lang), lang }), breadcrumbSchema([{ name: 'Home', path: route('home', lang) }, { name: 'Method', path: route('method', lang) }])]} breadcrumbs={[{ label: 'Method' }]}>
+  <header class="mb-6"><p class="kicker">Method</p><h1 class="mt-0 text-3xl font-bold text-navy-900 md:text-4xl">How the questions, the marking and the dates are built</h1></header>
+  <div class="prose prose-slate max-w-none">
+    <p>All pages and tools read two kinds of file: the question banks, and one parameter file holding the IRCC rules and fees as read on {h.date(P.retrieved_at)}. A pass mark, a fee or a day limit is never typed into a page; when IRCC changes one, a single edit to that file updates the whole site.</p>
+    <h2>1. Writing the questions</h2>
+    <p>The English bank has {h.count} questions spread over the ten chapters of Discover Canada: {h.chapters.map((c, i) => `${h.inChapter(i)} on ${c}`).join(', ')}. Each has one right answer, three wrong ones we wrote, an explanation and a pointer to the part of the guide that backs it. Discover Canada is Crown copyright and the Government of Canada's terms rule out commercial reproduction without permission, so we take facts from it, never its sentences and never its own study questions. Questions in French were drafted in French from the start rather than translated from this bank.</p>
+    <p>Two kinds of question are excluded: those whose answer is whoever holds an office right now, and those resting on facts that are no longer true. When the guide and today's law differ, the explanation says so.</p>
+    <h2>2. Drawing and marking a mock test</h2>
+    <p>A mock test has the shape of the real one: {P.ca.test.questions} questions, {P.ca.test.minutes} minutes, pass at {h.need} correct answers (<Fragment set:html={s('ca_study', 'IRCC study page')} />). Each draw is random across the whole bank but seeded, which means a shared link brings back the identical set. The timer starts at the first answer. A question left blank when time runs out is marked wrong, as an unanswered question on the real test would be. Practice sets take ten questions from one chapter and correct each answer at once.</p>
+    <h2>3. Counting the 1,095 days</h2>
+    <p>The date tool tries each day from today and stops at the first on which the count reaches {h.num(C.requiredDays)} days in the {C.windowYears} years before that day, with at least {h.num(C.minPrDays)} days as a permanent resident (<Fragment set:html={s('ca_eligibility', 'who can apply')} />). Following the <Fragment set:html={s('ca_bulletin', 'IRCC instructions on physical presence')} />, the day you sign is not counted, only a day spent entirely outside Canada is an absence, and each day in Canada before permanent residence counts for half, up to {C.preprMaxCredit} days. The tool does not count time in prison, on parole or on probation, nor Crown service abroad: if either applies to you, the official calculator in your IRCC account is the one to use.</p>
+    <p>When the total sits within five days of the limit, the result warns you: IRCC compares your count with your travel records, and one wrong date can change the outcome.</p>
+    <h2>4. Fees</h2>
+    <p>Fees are taken from the <Fragment set:html={s('ca_fees', 'IRCC fee list')} />, updated by IRCC on {h.date(P.ca.fees.dateModified)}. That list gives {h.cad(P.ca.fees.adult)} for an adult, including the processing fee and the right of citizenship fee of {h.cad(P.ca.fees.rightOfCitizenship)}; the {h.cad(P.ca.fees.adultProcessing)} processing part is the difference between the two, worked out by us.</p>
+    <h2>5. Automated checks</h2>
+    <p>Each build runs tests: no question repeats an option, lacks a correct choice, an explanation or a source; a mock test has {P.ca.test.questions} questions; the half-day credit stops at {C.preprMaxCredit} days; a departure and a return on consecutive days remove no day; fees add up. A monthly script re-reads the fee list and halts the update if an amount differs.</p>
+    <h2>6. What the site does not do</h2>
+    <ul>
+      <li>It does not assess prohibitions, criminal records or the validity of your PR status.</li>
+      <li>It does not reproduce the official test or claim to.</li>
+      <li>It sends nothing to IRCC: applications are made only in your IRCC account or on paper.</li>
+    </ul>
+    <p>Method version: {LAST_UPDATED}. A figure looks wrong: <a href={route('contact', lang)}>contact</a>.</p>
+  </div>
+</PageLayout>

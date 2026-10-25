@@ -1,0 +1,24 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import LegalIdentity from '../../components/LegalIdentity.astro';
+import { CONTACT_EMAIL, LAST_UPDATED, SITE_NAMES } from '../../data/site-config';
+import { route } from '../../i18n/routes';
+const lang = 'en';
+---
+<PageLayout title={`Contact ${SITE_NAMES[lang]}: a fee, a question, the widget`} description="Write to Canadian Citizenship Quiz when an IRCC fee or the 1,095-day rule looks dated, when a practice question seems wrong, or to embed the free mock test." lang={lang} noindex={true} breadcrumbs={[{ label: 'Contact' }]} showAuthor={false}>
+  <div class="prose prose-slate max-w-none">
+    <h1>Contact</h1>
+    <p>Email: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>. Every message is read by a person at Radif Partners.</p>
+    <h2>An IRCC fee or rule seems outdated</h2>
+    <p>Name the figure and, when you can, link the canada.ca page that shows a different one. IRCC does not update its fee list and its test pages on the same day, so two of its own pages may briefly disagree. We go back to the IRCC page, fix the value in our parameter file and record the date of the fix.</p>
+    <h2>A practice question looks wrong</h2>
+    <p>Send the opening words of the question. Its explanation names the section of Discover Canada it relies on; when the guide no longer matches today's facts, the question is rewritten or dropped.</p>
+    <h2>What we cannot do</h2>
+    <p>This site is not IRCC and gives no immigration advice. It cannot schedule a test, look at a file or answer a question about one person's case. Keep personal data out of your email: no UCI, passport number, application number or date of birth.</p>
+    <h2>Showing the mock test on your site</h2>
+    <p>Public libraries, colleges, language classes and settlement agencies may embed the test free of charge: the code is on the <a href={route('widget', lang)}>embed page</a>.</p>
+    <h2>Publisher</h2>
+    <LegalIdentity lang={lang} />
+    <p>Updated: {LAST_UPDATED}.</p>
+  </div>
+</PageLayout>
